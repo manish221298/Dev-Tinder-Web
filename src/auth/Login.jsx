@@ -3,10 +3,13 @@ import axios from "axios";
 import { baseUrl } from "../utils/constants";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-hot-toast";
 
 const Login = () => {
   const [email, setEmail] = useState("mandani@gmail.com");
   const [password, setPassword] = useState("Test@123");
+  const navigation = useNavigate();
 
   const dispatch = useDispatch();
 
@@ -16,9 +19,13 @@ const Login = () => {
         email,
         password,
       });
+      localStorage.setItem("token", res?.data?.token);
       dispatch(addUser(res?.data));
+      navigation("/profile");
     } catch (err) {
-      console.log(err);
+      if (err.status === 400 || err.status === 401) {
+        toast.error(err.response.data);
+      }
     }
   };
 
