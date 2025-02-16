@@ -25,8 +25,6 @@ const Feed = () => {
     fetchData();
   }, []);
 
-  console.log("feedData", feedData);
-
   return (
     <div className="flex justify-center my-10">
       <div className="card bg-base-200 w-96 shadow-sm">
