@@ -4,7 +4,9 @@ const Navbar = () => {
   return (
     <div className="navbar bg-base-300 shadow-sm">
       <div className="flex-1">
-        <a className="btn btn-ghost text-xl">Dev Tinder</a>
+        <Link to="/" className="btn btn-ghost text-xl">
+          Dev Tinder
+        </Link>
       </div>
       <div className="flex gap-2">
         <input
@@ -36,10 +38,10 @@ const Navbar = () => {
               </Link>
             </li>
             <li>
-              <a>Settings</a>
+              <Link to="connections">Connections</Link>
             </li>
             <li>
-              <a>Logout</a>
+              <Link to="requests">Requests</Link>
             </li>
           </ul>
         </div>
