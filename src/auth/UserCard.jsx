@@ -1,4 +1,33 @@
+import React from "react";
+import axios from "axios";
+import { baseUrl, getToken } from "../utils/constants";
+import { useDispatch } from "react-redux";
+import { removeFeed } from "../utils/feedSlice";
+
 const UserCard = ({ feedData }) => {
+  const dispatch = useDispatch();
+
+  const handleCards = async (status, fromUserId) => {
+    try {
+      const res = await axios.post(
+        `${baseUrl}/request/send/${status}/${fromUserId}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${getToken()}`,
+          },
+        }
+      );
+      dispatch(removeFeed(fromUserId));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  if (feedData?.length <= 0) {
+    return <h1 className="items-center text-primary">New user not exist</h1>;
+  }
+
   return (
     <div className="card bg-base-200 w-96 shadow-sm">
       <figure>
@@ -17,8 +46,18 @@ const UserCard = ({ feedData }) => {
         <p>{feedData?.gender + ", " + feedData?.nationality}</p>
         <p>{feedData?.bio}</p>
         <div className="card-actions justify-center">
-          <button className="btn btn-error">Ignore</button>
-          <button className="btn btn-secondary">Interested</button>
+          <button
+            onClick={() => handleCards("ignored", feedData?._id)}
+            className="btn btn-error"
+          >
+            Ignore
+          </button>
+          <button
+            onClick={() => handleCards("interested", feedData?._id)}
+            className="btn btn-secondary"
+          >
+            Interested
+          </button>
         </div>
       </div>
     </div>

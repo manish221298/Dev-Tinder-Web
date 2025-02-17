@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import { baseUrl, getToken } from "../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
 import { addFeed } from "../utils/feedSlice";
+import UserCard from "../auth/UserCard";
 
 const Feed = () => {
   const feedData = useSelector((state) => state.feed);
@@ -15,7 +16,8 @@ const Feed = () => {
           Authorization: `Bearer ${getToken()}`,
         },
       });
-      dispatch(addFeed(res.data.feedUsers[3]));
+
+      dispatch(addFeed(res?.data?.feedUsers));
     } catch (err) {
       console.log(err);
     }
@@ -25,31 +27,20 @@ const Feed = () => {
     fetchData();
   }, []);
 
+  if (feedData?.length <= 0) {
+    return (
+      <h1 className="flex text-2xl my-5 justify-center items-center text-primary">
+        New user not exist
+      </h1>
+    );
+  }
+
   return (
-    <div className="flex justify-center my-10">
-      <div className="card bg-base-200 w-96 shadow-sm">
-        <figure>
-          <img
-            src={
-              feedData?.photo ||
-              "https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
-            }
-            alt="Shoes"
-          />
-        </figure>
-        <div className="card-body">
-          <h2 className="card-title">
-            {feedData?.firstName + " " + feedData?.lastName}
-          </h2>
-          <p>{feedData?.gender + ", " + feedData?.nationality}</p>
-          <p>{feedData?.bio}</p>
-          <div className="card-actions justify-center">
-            <button className="btn btn-error">Ignore</button>
-            <button className="btn btn-secondary">Interested</button>
-          </div>
-        </div>
+    feedData && (
+      <div className="flex justify-center my-10">
+        <UserCard feedData={feedData[0]} />
       </div>
-    </div>
+    )
   );
 };
 

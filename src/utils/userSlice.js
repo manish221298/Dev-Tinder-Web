@@ -10,7 +10,8 @@ const userSlice = createSlice({
       return action.payload;
     },
     removeUser: (state, action) => {
-      return null;
+      const data = state.filter((state) => state._id !== action.payload);
+      return data;
     },
   },
 });
