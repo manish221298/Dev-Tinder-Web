@@ -17,7 +17,7 @@ const Body = () => {
     if (!getToken()) {
       navigation("/login");
     }
-  }, []);
+  }, [getToken()]);
 
   const fetchData = async () => {
     try {
