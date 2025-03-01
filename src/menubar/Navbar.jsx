@@ -22,6 +22,9 @@ const Navbar = () => {
           placeholder="Search"
           className="input input-bordered w-24 md:w-auto"
         /> */}
+        <h1 className="flex items-center text-primary ">
+          Welcome {userData?.firstName}
+        </h1>
         <div className="dropdown dropdown-end">
           <div
             tabIndex={0}

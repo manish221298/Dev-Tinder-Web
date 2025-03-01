@@ -5,7 +5,7 @@ import { addConnections } from "../utils/connectionsSlice";
 import axios from "axios";
 import { baseUrl, getToken } from "../utils/constants";
 
-const headers = ["Name", "Nationality", "Email", "Bio"];
+const headers = ["Name", "Nationality", "Email", "Chat"];
 
 const Connections = () => {
   const dispatch = useDispatch();
@@ -19,7 +19,9 @@ const Connections = () => {
           Authorization: `Bearer ${getToken()}`,
         },
       });
-      dispatch(addConnections(res?.data?.myConnection));
+      console.log("res data", res);
+
+      dispatch(addConnections(res?.data?.data));
     } catch (err) {
       //   console.log(err);
     }

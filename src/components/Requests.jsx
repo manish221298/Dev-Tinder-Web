@@ -19,7 +19,9 @@ const Requests = () => {
           Authorization: `Bearer ${getToken()}`,
         },
       });
-      dispatch(addRequest(res?.data?.requestedData));
+      console.log("log data", res.data.data);
+
+      dispatch(addRequest(res?.data?.data));
       _requestStatus("");
     } catch (err) {
       console.log(err);

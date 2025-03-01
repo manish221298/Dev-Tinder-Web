@@ -9,8 +9,8 @@ import { toast } from "react-hot-toast";
 const Login = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("mandani@gmail.com");
-  const [password, setPassword] = useState("Test@123");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [isLogin, setIsLogin] = useState(true);
   const navigation = useNavigate();
 
@@ -40,9 +40,9 @@ const Login = () => {
         email,
         password,
       });
-      console.log("res data", res);
 
       toast.success(res?.data);
+      setIsLogin(true);
     } catch (err) {
       if (err.status === 400 || err.status === 401) {
         toast.error(err.response.data);

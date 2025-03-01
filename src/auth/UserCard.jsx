@@ -30,7 +30,7 @@ const UserCard = ({ feedData }) => {
 
   return (
     <div className="card bg-base-200 w-96 shadow-sm">
-      <figure>
+      <figure className="mt-2">
         <img
           src={
             feedData?.photo ||
@@ -43,7 +43,7 @@ const UserCard = ({ feedData }) => {
         <h2 className="card-title">
           {feedData?.firstName + " " + feedData?.lastName}
         </h2>
-        <p>{feedData?.gender + ", " + feedData?.nationality}</p>
+        <p>{"Nationality:" + " " + feedData?.nationality}</p>
         <p>{feedData?.bio}</p>
         <div className="card-actions justify-center">
           <button
