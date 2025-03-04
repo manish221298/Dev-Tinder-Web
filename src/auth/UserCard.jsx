@@ -29,7 +29,7 @@ const UserCard = ({ feedData }) => {
   }
 
   return (
-    <div className="card bg-base-200 w-96 shadow-sm">
+    <div className="card bg-base-200 mb-15 shadow-sm">
       <figure className="mt-2">
         <img
           src={
@@ -45,7 +45,7 @@ const UserCard = ({ feedData }) => {
         </h2>
         <p>{"Nationality:" + " " + feedData?.nationality}</p>
         <p>{feedData?.bio}</p>
-        <div className="card-actions justify-center">
+        <div className="card-actions justify-center mb-5">
           <button
             onClick={() => handleCards("ignored", feedData?._id)}
             className="btn btn-error"

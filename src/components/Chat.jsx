@@ -48,8 +48,6 @@ const Chat = () => {
     };
   }, [userId, targetUserId]);
 
-  console.log("ui message is", message);
-
   const sendMessage = () => {
     const socket = createSocketConnection();
     socket.emit("sendMessage", {
@@ -58,23 +56,26 @@ const Chat = () => {
       targetUserId,
       text: newMessage,
     });
+    setNewMessage("");
   };
 
   return (
     <>
-      <div className="flex justify-center mt-4">
-        <div className="text-white border rounded-xl bg-gray-800 border-gray-700 w-2/3 p-5 shadow-lg">
+      <div className="flex justify-center m-2">
+        <div className="text-white border rounded-xl bg-gray-800 border-gray-700 w-full sm:w-2/3 p-5 shadow-lg">
           <h1 className="border-b border-gray-600 pb-2 mb-4 text-lg font-semibold">
             Chat Room
           </h1>
 
-          <div className="h-[50vh] overflow-y-auto space-y-4 p-2">
+          <div className="h-[30vh] sm:h-[50vh] overflow-y-auto space-y-4 p-2">
             {message?.map((message, index) => {
               return (
                 <div
                   key={index}
                   className={`chat   ${
-                    message?.userId === userId ? "chat-end " : "chat-start"
+                    message?.firstName === loggedInUser?.firstName
+                      ? "chat-end "
+                      : "chat-start"
                   }`}
                 >
                   <div className="chat-header ">
@@ -85,7 +86,9 @@ const Chat = () => {
                   </div>
                   <div
                     className={`chat-bubble ${
-                      message?.userId === userId ? " bg-primary" : ""
+                      message?.firstName === loggedInUser?.firstName
+                        ? " bg-primary"
+                        : ""
                     }`}
                   >
                     {message?.text}
@@ -96,17 +99,17 @@ const Chat = () => {
             })}
           </div>
 
-          <div className="flex justify-between items-center rounded-xl bg-gray-700 p-3 mt-4">
+          <div className="flex justify-between items-center rounded-xl bg-gray-700 p-2 sm:p-3 mt-4">
             <input
               type="text"
               value={newMessage}
               onChange={(e) => setNewMessage(e.target.value)}
               placeholder="Type your message..."
-              className="h-[50px] rounded-full w-10/12 px-4 bg-gray-600 text-white outline-none"
+              className="h-[38px] sm:h-[50px] rounded-lg sm:rounded-full w-10/12 px-4 bg-gray-600 text-white outline-none"
             />
             <button
               onClick={sendMessage}
-              className="h-[50px] rounded-full w-2/12 bg-primary text-white font-bold ml-3"
+              className=" h-[38px] sm:h-[50px]  rounded-lg sm:rounded-full w-2/12 bg-primary text-white font-bold ml-3"
             >
               Send
             </button>

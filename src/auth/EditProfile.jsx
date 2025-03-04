@@ -70,11 +70,11 @@ const EditProfile = ({ user }) => {
   };
 
   return (
-    <div className="flex gap-5 my-5">
-      <div className="card card-border bg-base-200 w-100">
+    <div className="flex flex-col sm:flex-row gap-5 my-5">
+      <div className="card card-border bg-base-200 w-full sm:w-1/2">
         <div className="card-body">
           <h2 className="card-title justify-center">Update Profile</h2>
-          <div>
+          <div className="w-full">
             {formFields.map(({ label, name, type, placeholder }) => (
               <fieldset key={name} className="fieldset">
                 <legend className="fieldset-legend">{label}</legend>
@@ -99,21 +99,6 @@ const EditProfile = ({ user }) => {
                 placeholder="Tell us about yourself"
               />
             </fieldset>
-
-            {/* <fieldset className="fieldset">
-              <legend className="fieldset-legend">Gender</legend>
-              <select
-                name="gender"
-                value={formData.gender}
-                onChange={handleChange}
-                className="input"
-              >
-                <option value="">Select Gender</option>
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-                <option value="other">Other</option>
-              </select>
-            </fieldset> */}
           </div>
           <div className="card-actions justify-center">
             <button onClick={handleUpdate} className="btn btn-success px-10">
@@ -122,7 +107,9 @@ const EditProfile = ({ user }) => {
           </div>
         </div>
       </div>
-      <UserCard feedData={formData} />
+      <div className="w-full sm:w-1/2 ">
+        <UserCard feedData={formData} />
+      </div>
     </div>
   );
 };
