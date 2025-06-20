@@ -10,6 +10,8 @@ import { Toaster } from "react-hot-toast";
 import Connections from "./components/Connections";
 import Requests from "./components/Requests";
 import Chat from "./components/Chat";
+import AddQuestions from "./quiz/AddQuestions";
+import Quiz from "./quiz/Quiz";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -27,6 +29,8 @@ function App() {
               <Route path="/connections" element={<Connections />} />
               <Route path="/requests" element={<Requests />} />
               <Route path="/chat/:targetUserId" element={<Chat />} />
+              <Route path="/addquestions" element={<AddQuestions />} />
+              <Route path="/starttest" element={<Quiz />} />
             </Route>
           </Routes>
         </BrowserRouter>

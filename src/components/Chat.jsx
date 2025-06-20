@@ -20,7 +20,6 @@ const Chat = () => {
           Authorization: `Bearer ${getToken()}`,
         },
       });
-      console.log("log data", res?.data);
       setMessage(res?.data);
     } catch (err) {
       console.log(err);
