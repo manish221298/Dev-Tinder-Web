@@ -9,11 +9,8 @@ const Quiz = () => {
   const dispatch = useDispatch();
   const questionsData = useSelector((state) => state.questions);
   const [loading, setLoading] = useState(true);
-
+  const [testData, setTestData] = useState([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [selectedOptions, setSelectedOptions] = useState({});
-
-  console.log("Questions Data:", questionsData);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -24,10 +21,15 @@ const Quiz = () => {
           },
         });
 
-        console.log("Fetched Questions:", res?.data?.questionList);
+        if (res.data?.questionList?.length) {
+          dispatch(addQuestion(res.data.questionList));
 
-        if (res.data) {
-          dispatch(addQuestion(res?.data?.questionList));
+          const initialTestData = res.data.questionList.map((question) => ({
+            questionId: question._id,
+            selectedAnswer: "",
+          }));
+
+          setTestData(initialTestData);
         } else {
           toast.error("No questions available.");
         }
@@ -42,10 +44,14 @@ const Quiz = () => {
   }, [dispatch]);
 
   const handleOptionClick = (option) => {
-    setSelectedOptions((prev) => ({
-      ...prev,
-      [currentQuestionIndex]: option,
-    }));
+    setTestData((prevData) => {
+      const updatedData = [...prevData];
+      updatedData[currentQuestionIndex] = {
+        ...updatedData[currentQuestionIndex],
+        selectedAnswer: option,
+      };
+      return updatedData;
+    });
   };
 
   const handleNext = () => {
@@ -57,6 +63,22 @@ const Quiz = () => {
   const handlePrev = () => {
     if (currentQuestionIndex > 0) {
       setCurrentQuestionIndex((prev) => prev - 1);
+    }
+  };
+
+  console.log("Test Data:", testData);
+
+  const handleSubmit = async () => {
+    try {
+      const res = await axios.post(`${baseUrl}/submit/quiz`, testData, {
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+      });
+
+      toast.success("Quiz submitted successfully!");
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -82,6 +104,7 @@ const Quiz = () => {
   }
 
   const currentQuestion = questionsData[currentQuestionIndex];
+  const isLastQuestion = currentQuestionIndex === questionsData.length - 1;
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-blue-100 to-purple-200">
@@ -96,7 +119,8 @@ const Quiz = () => {
 
         <div className="space-y-4">
           {currentQuestion.options.map((option, index) => {
-            const isSelected = selectedOptions[currentQuestionIndex] === option;
+            const isSelected =
+              testData[currentQuestionIndex]?.selectedAnswer === option;
 
             return (
               <button
@@ -122,13 +146,22 @@ const Quiz = () => {
           >
             Previous
           </button>
-          <button
-            onClick={handleNext}
-            disabled={currentQuestionIndex === questionsData.length - 1}
-            className="bg-gray-300 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-400 transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            Next
-          </button>
+
+          {!isLastQuestion ? (
+            <button
+              onClick={handleNext}
+              className="bg-gray-300 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-400 transition duration-200"
+            >
+              Next
+            </button>
+          ) : (
+            <button
+              onClick={handleSubmit}
+              className="bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 transition duration-200"
+            >
+              Submit
+            </button>
+          )}
         </div>
       </div>
     </div>

@@ -12,6 +12,7 @@ import Requests from "./components/Requests";
 import Chat from "./components/Chat";
 import AddQuestions from "./quiz/AddQuestions";
 import Quiz from "./quiz/Quiz";
+import QuizPerformance from "./quiz/QuizPerformance";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -31,6 +32,7 @@ function App() {
               <Route path="/chat/:targetUserId" element={<Chat />} />
               <Route path="/addquestions" element={<AddQuestions />} />
               <Route path="/starttest" element={<Quiz />} />
+              <Route path="/quizperformance" element={<QuizPerformance />} />
             </Route>
           </Routes>
         </BrowserRouter>
