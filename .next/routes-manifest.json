@@ -1,0 +1,170 @@
+{
+  "version": 3,
+  "pages404": true,
+  "caseSensitive": false,
+  "basePath": "",
+  "redirects": [
+    {
+      "source": "/:path+/",
+      "destination": "/:path+",
+      "internal": true,
+      "statusCode": 308,
+      "regex": "^(?:/((?:[^/]+?)(?:/(?:[^/]+?))*))/$"
+    }
+  ],
+  "headers": [],
+  "rewrites": {
+    "beforeFiles": [],
+    "afterFiles": [],
+    "fallback": []
+  },
+  "dynamicRoutes": [
+    {
+      "page": "/api/chat/[targetUserId]",
+      "regex": "^/api/chat/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPtargetUserId": "nxtPtargetUserId"
+      },
+      "namedRegex": "^/api/chat/(?<nxtPtargetUserId>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/api/quiz/[id]",
+      "regex": "^/api/quiz/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/api/quiz/(?<nxtPid>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/api/request/review/[status]/[requestId]",
+      "regex": "^/api/request/review/([^/]+?)/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPstatus": "nxtPstatus",
+        "nxtPrequestId": "nxtPrequestId"
+      },
+      "namedRegex": "^/api/request/review/(?<nxtPstatus>[^/]+?)/(?<nxtPrequestId>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/api/request/send/[status]/[toUserId]",
+      "regex": "^/api/request/send/([^/]+?)/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPstatus": "nxtPstatus",
+        "nxtPtoUserId": "nxtPtoUserId"
+      },
+      "namedRegex": "^/api/request/send/(?<nxtPstatus>[^/]+?)/(?<nxtPtoUserId>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/api/result/set/[quizSetId]/users",
+      "regex": "^/api/result/set/([^/]+?)/users(?:/)?$",
+      "routeKeys": {
+        "nxtPquizSetId": "nxtPquizSetId"
+      },
+      "namedRegex": "^/api/result/set/(?<nxtPquizSetId>[^/]+?)/users(?:/)?$"
+    },
+    {
+      "page": "/api/result/[resultId]",
+      "regex": "^/api/result/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPresultId": "nxtPresultId"
+      },
+      "namedRegex": "^/api/result/(?<nxtPresultId>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/chat/[targetUserId]",
+      "regex": "^/chat/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPtargetUserId": "nxtPtargetUserId"
+      },
+      "namedRegex": "^/chat/(?<nxtPtargetUserId>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/quiz/[quizSetId]",
+      "regex": "^/quiz/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPquizSetId": "nxtPquizSetId"
+      },
+      "namedRegex": "^/quiz/(?<nxtPquizSetId>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/result/set/[quizSetId]",
+      "regex": "^/result/set/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPquizSetId": "nxtPquizSetId"
+      },
+      "namedRegex": "^/result/set/(?<nxtPquizSetId>[^/]+?)(?:/)?$"
+    }
+  ],
+  "staticRoutes": [
+    {
+      "page": "/",
+      "regex": "^/(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/(?:/)?$"
+    },
+    {
+      "page": "/_not-found",
+      "regex": "^/_not\\-found(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/_not\\-found(?:/)?$"
+    },
+    {
+      "page": "/connections",
+      "regex": "^/connections(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/connections(?:/)?$"
+    },
+    {
+      "page": "/login",
+      "regex": "^/login(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/login(?:/)?$"
+    },
+    {
+      "page": "/profile",
+      "regex": "^/profile(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/profile(?:/)?$"
+    },
+    {
+      "page": "/quiz",
+      "regex": "^/quiz(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/quiz(?:/)?$"
+    },
+    {
+      "page": "/requests",
+      "regex": "^/requests(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/requests(?:/)?$"
+    },
+    {
+      "page": "/result",
+      "regex": "^/result(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/result(?:/)?$"
+    },
+    {
+      "page": "/uploadpdf",
+      "regex": "^/uploadpdf(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/uploadpdf(?:/)?$"
+    }
+  ],
+  "dataRoutes": [],
+  "rsc": {
+    "header": "rsc",
+    "varyHeader": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch",
+    "prefetchHeader": "next-router-prefetch",
+    "didPostponeHeader": "x-nextjs-postponed",
+    "contentTypeHeader": "text/x-component",
+    "suffix": ".rsc",
+    "prefetchSuffix": ".prefetch.rsc",
+    "prefetchSegmentHeader": "next-router-segment-prefetch",
+    "prefetchSegmentSuffix": ".segment.rsc",
+    "prefetchSegmentDirSuffix": ".segments"
+  },
+  "rewriteHeaders": {
+    "pathHeader": "x-nextjs-rewritten-path",
+    "queryHeader": "x-nextjs-rewritten-query"
+  }
+}
