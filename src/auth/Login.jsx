@@ -51,73 +51,96 @@ const Login = () => {
   };
 
   return (
-    <div className="flex justify-center my-10">
-      <div className="card card-border bg-base-200 w-100">
-        <div className="card-body">
-          <h2 className="card-title justify-center">
-            {isLogin ? "Login" : "SignUp"}
-          </h2>
-          <div>
+    <div className="flex justify-center items-center min-h-[70vh] px-4">
+      <div className="card bg-base-100/90 backdrop-blur-md shadow-2xl w-full max-w-md border border-base-300">
+        <div className="card-body p-8">
+          <div className="text-center mb-6">
+            <h2 className="text-3xl font-bold mb-2">
+              {isLogin ? "Welcome Back" : "Create Account"}
+            </h2>
+            <p className="text-base-content/70">
+              {isLogin ? "Sign in to continue" : "Join Dev Tinder today"}
+            </p>
+          </div>
+          
+          <div className="space-y-4">
             {!isLogin && (
               <>
-                <fieldset className="fieldset">
-                  <legend className="fieldset-legend">First Name*</legend>
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text font-semibold">First Name *</span>
+                  </label>
                   <input
                     type="text"
                     value={firstName}
                     onChange={(e) => setFirstName(e.target.value)}
-                    className="input"
+                    className="input input-bordered w-full focus:input-primary"
                     placeholder="Enter First Name"
                   />
-                </fieldset>
+                </div>
 
-                <fieldset className="fieldset">
-                  <legend className="fieldset-legend">Last Name</legend>
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text font-semibold">Last Name</span>
+                  </label>
                   <input
                     type="text"
                     value={lastName}
                     onChange={(e) => setLastName(e.target.value)}
-                    className="input"
+                    className="input input-bordered w-full focus:input-primary"
                     placeholder="Enter Last Name"
                   />
-                </fieldset>
+                </div>
               </>
             )}
-            <fieldset className="fieldset">
-              <legend className="fieldset-legend">Email Id*</legend>
+            
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text font-semibold">Email *</span>
+              </label>
               <input
-                type="text"
+                type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="input"
+                className="input input-bordered w-full focus:input-primary"
                 placeholder="xyz@gmail.com"
               />
-            </fieldset>
+            </div>
 
-            <fieldset className="fieldset">
-              <legend className="fieldset-legend">Password*</legend>
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text font-semibold">Password *</span>
+              </label>
               <input
-                type="text"
+                type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="input"
-                placeholder="********"
+                className="input input-bordered w-full focus:input-primary"
+                placeholder="Enter your password"
               />
-            </fieldset>
+            </div>
           </div>
 
-          <div className="card-actions justify-center items-center ">
+          <div className="card-actions flex-col gap-3 mt-6">
             <button
               onClick={isLogin ? handleLogin : handleSignup}
-              className="btn btn-success px-5"
+              className="btn btn-primary w-full text-lg font-semibold hover:scale-105 transition-transform"
             >
-              {isLogin ? "Login" : "SignUp"}
+              {isLogin ? "Login" : "Sign Up"}
             </button>
             <button
               onClick={() => setIsLogin(!isLogin)}
-              className="text-primary underline cursor-pointer px-8 text-lg"
+              className="btn btn-ghost w-full text-sm"
             >
-              {isLogin ? "SignUp" : "Login"}
+              {isLogin ? (
+                <>
+                  Don't have an account? <span className="text-primary font-semibold ml-1">Sign Up</span>
+                </>
+              ) : (
+                <>
+                  Already have an account? <span className="text-primary font-semibold ml-1">Login</span>
+                </>
+              )}
             </button>
           </div>
         </div>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { createSocketConnection } from "../utils/socket";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -12,6 +12,11 @@ const Chat = () => {
   const userId = loggedInUser?._id;
   const [newMessage, setNewMessage] = useState("");
   const [message, setMessage] = useState([]);
+  const messagesEndRef = useRef(null);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
 
   const fetchChat = async () => {
     try {
@@ -31,6 +36,11 @@ const Chat = () => {
     fetchChat();
   }, [targetUserId]);
 
+  // Auto-scroll to bottom when messages change
+  useEffect(() => {
+    scrollToBottom();
+  }, [message]);
+
   useEffect(() => {
     if (!userId) {
       return;
@@ -49,6 +59,8 @@ const Chat = () => {
   }, [userId, targetUserId]);
 
   const sendMessage = () => {
+    if (!newMessage.trim()) return;
+    
     const socket = createSocketConnection();
     socket.emit("sendMessage", {
       firstName: loggedInUser.firstName,
@@ -59,64 +71,91 @@ const Chat = () => {
     setNewMessage("");
   };
 
-  return (
-    <>
-      <div className="flex justify-center m-2">
-        <div className="text-white border rounded-xl bg-gray-800 border-gray-700 w-full sm:w-2/3 p-5 shadow-lg">
-          <h1 className="border-b border-gray-600 pb-2 mb-4 text-lg font-semibold">
-            Chat Room
-          </h1>
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage();
+    }
+  };
 
-          <div className="h-[30vh] sm:h-[50vh] overflow-y-auto space-y-4 p-2">
-            {message?.map((message, index) => {
-              return (
-                <div
-                  key={index}
-                  className={`chat   ${
-                    message?.firstName === loggedInUser?.firstName
-                      ? "chat-end "
-                      : "chat-start"
-                  }`}
-                >
-                  <div className="chat-header ">
-                    {message?.firstName}
-                    <time className="text-xs opacity-50">
-                      {messageSendTime(message.createdAt)}
-                    </time>
-                  </div>
-                  <div
-                    className={`chat-bubble ${
-                      message?.firstName === loggedInUser?.firstName
-                        ? " bg-primary"
-                        : ""
-                    }`}
-                  >
-                    {message?.text}
-                  </div>
-                  <div className="chat-footer opacity-50">Seen</div>
-                </div>
-              );
-            })}
+  return (
+    <div className="flex justify-center items-center min-h-[70vh] px-4 py-6">
+      <div className="card bg-base-100/90 backdrop-blur-md shadow-2xl w-full max-w-4xl border border-base-300">
+        <div className="card-body p-0">
+          <div className=" p-4 rounded-t-2xl">
+            <h1 className="text-xl font-bold text-white flex items-center gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+              </svg>
+              Chat Room
+            </h1>
           </div>
 
-          <div className="flex justify-between items-center rounded-xl bg-gray-700 p-2 sm:p-3 mt-4">
+          <div className="h-[50vh] sm:h-[60vh] overflow-y-auto space-y-4 p-4 bg-base-200/50">
+            {message?.length === 0 ? (
+              <div className="flex flex-col items-center justify-center h-full text-base-content/50">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                </svg>
+                <p className="text-lg">No messages yet. Start the conversation!</p>
+              </div>
+            ) : (
+              <>
+                {message?.map((message, index) => {
+                  const isOwnMessage = message?.firstName === loggedInUser?.firstName;
+                  return (
+                    <div
+                      key={index}
+                      className={`chat ${isOwnMessage ? "chat-end" : "chat-start"}`}
+                    >
+                      <div className="chat-header opacity-70 text-sm">
+                        {message?.firstName}
+                        <time className="text-xs opacity-50 ml-2">
+                          {messageSendTime(message.createdAt)}
+                        </time>
+                      </div>
+                      <div
+                        className={`chat-bubble ${
+                          isOwnMessage
+                            ? "bg-primary text-primary-content"
+                            : "bg-base-300 text-base-content"
+                        }`}
+                      >
+                        {message?.text}
+                      </div>
+                      <div className="chat-footer opacity-50 text-xs">
+                        {isOwnMessage && "Seen"}
+                      </div>
+                    </div>
+                  );
+                })}
+                <div ref={messagesEndRef} />
+              </>
+            )}
+          </div>
+
+          <div className="flex gap-2 items-center p-4 bg-base-100 border-t border-base-300 rounded-b-2xl">
             <input
               type="text"
               value={newMessage}
               onChange={(e) => setNewMessage(e.target.value)}
+              onKeyPress={handleKeyPress}
               placeholder="Type your message..."
-              className="h-[38px] sm:h-[50px] rounded-lg sm:rounded-full w-10/12 px-4 bg-gray-600 text-white outline-none"
+              className="input input-bordered flex-1 focus:input-primary"
             />
             <button
               onClick={sendMessage}
-              className=" h-[38px] sm:h-[50px]  rounded-lg sm:rounded-full w-2/12 bg-primary text-white font-bold ml-3"
+              disabled={!newMessage.trim()}
+              className="btn btn-primary btn-circle hover:scale-110 transition-transform disabled:opacity-50"
             >
-              Send
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+              </svg>
             </button>
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

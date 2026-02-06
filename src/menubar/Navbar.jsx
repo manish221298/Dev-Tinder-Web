@@ -10,68 +10,35 @@ const Navbar = () => {
   console.log("navbar", userData?.photo);
 
   return (
-    <div className="navbar bg-base-300 shadow-sm">
+    <div className="navbar bg-base-100/80 backdrop-blur-md shadow-lg border-b border-base-300 sticky top-0 z-50">
       <div className="flex-1">
-        <Link to="/" className="btn btn-ghost text-xl">
+        <Link to="/" className="btn btn-ghost text-xl font-bold hover:scale-105 transition-transform">
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+          </svg>
           Dev Tinder
         </Link>
       </div>
-      <div className="flex gap-2">
-        {/* <input
-          type="text"
-          placeholder="Search"
-          className="input input-bordered w-24 md:w-auto"
-        /> */}
-        <h1 className="flex items-center text-primary ">
-          Welcome {userData?.firstName}
-        </h1>
-        <div className="dropdown dropdown-end">
-          <div
-            tabIndex={0}
-            role="button"
-            className="btn btn-ghost btn-circle avatar"
-          >
-            <div className="w-10 rounded-full">
-              <img
-                alt="Tailwind CSS Navbar component"
-                src={
-                  userData?.photo
-                    ? userData.photo
-                    : "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
-                }
-              />
-            </div>
+      <div className="flex gap-3 items-center">
+        <div className="hidden sm:flex items-center gap-2 px-4 py-2 rounded-full bg-base-200/50">
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+          </svg>
+          <span className="text-sm font-medium text-base-content">
+            Welcome, <span className="text-primary font-semibold">{userData?.firstName || "User"}</span>
+          </span>
+        </div>
+        <div className="avatar">
+          <div className="w-10 rounded-full ring-2 ring-primary ring-offset-2 ring-offset-base-100">
+            <img
+              alt="User avatar"
+              src={
+                userData?.photo
+                  ? userData.photo
+                  : "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+              }
+            />
           </div>
-          {getToken() && (
-            <ul
-              tabIndex={0}
-              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
-            >
-              <li>
-                <Link to="/profile" className="justify-between">
-                  Profile
-                  <span className="badge">New</span>
-                </Link>
-              </li>
-              <li>
-                <Link to="connections">Connections</Link>
-              </li>
-              <li>
-                <Link to="requests">Requests</Link>
-              </li>
-              <li>
-                <button
-                  onClick={() => {
-                    localStorage.removeItem("token");
-                    navigate("/login");
-                  }}
-                  to="requests"
-                >
-                  Logout
-                </button>
-              </li>
-            </ul>
-          )}
         </div>
       </div>
     </div>
