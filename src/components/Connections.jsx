@@ -19,8 +19,6 @@ const Connections = () => {
           Authorization: `Bearer ${getToken()}`,
         },
       });
-      console.log("res data", res);
-
       dispatch(addConnections(res?.data?.data));
     } catch (err) {
       //   console.log(err);

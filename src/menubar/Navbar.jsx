@@ -7,8 +7,6 @@ const Navbar = () => {
 
   const userData = useSelector((state) => state.user);
 
-  console.log("navbar", userData?.photo);
-
   return (
     <div className="navbar bg-base-100/80 backdrop-blur-md shadow-lg border-b border-base-300 sticky top-0 z-50">
       <div className="flex-1">

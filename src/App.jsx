@@ -37,10 +37,10 @@ function App() {
               <Route path="/quiz/:quizSetId" element={<Quiz />} />
               <Route path="/result" element={<Results />} />
               <Route path="/result/set/:quizSetId" element={<UserResults />} />
-            </Route>
-          </Routes>
-        </BrowserRouter>
-      </Provider>
+            </Route >
+          </Routes >
+        </BrowserRouter >
+      </Provider >
     </>
   );
 }
