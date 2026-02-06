@@ -66,7 +66,6 @@ const Quiz = () => {
     }
   };
 
-  console.log("Test Data:", testData);
 
   const handleSubmit = async () => {
     try {

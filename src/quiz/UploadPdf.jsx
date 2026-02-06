@@ -29,7 +29,6 @@ export default function UploadPdf() {
         fullText += text + "\n";
       }
 
-      console.log("Extracted Text:", fullText);
 
       const regex =
         /Question\s*(\d+):\s*(.*?)\s*Option1:\s*(.*?)\s*Option2:\s*(.*?)\s*Option3:\s*(.*?)\s*Option4:\s*(.*?)\s*Answer:\s*(.*?)(?=Question\s*\d+:|$)/gi;
